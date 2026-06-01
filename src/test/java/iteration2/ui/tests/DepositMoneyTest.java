@@ -3,6 +3,7 @@ package iteration2.ui.tests;
 import iteration2.ui.utils.UiTestData;
 import models.CreateAccountResponse;
 import models.CreateUserRequest;
+import models.TransactionType;
 import org.junit.jupiter.api.Test;
 import specs.ResponseSpecs;
 
@@ -41,7 +42,7 @@ public class DepositMoneyTest extends BaseUiTest {
                 .isNotEmpty();
 
         assertThat(accountsAfterDeposit[0].getTransactions().toString())
-                .contains("DEPOSIT");
+                .contains(TransactionType.DEPOSIT.name());
     }
 
     @Test
@@ -65,13 +66,14 @@ public class DepositMoneyTest extends BaseUiTest {
         CreateAccountResponse[] accountsAfterDeposit = uiApiBridge.getUserAccounts(user);
 
         assertThat(accountsAfterDeposit[0].getBalance())
-                .isEqualTo(balanceBeforeDeposit + 5000.00);
+                .isEqualTo(balanceBeforeDeposit + UiTestData.MAX_DEPOSIT_AMOUNT_VALUE);
 
         assertThat(accountsAfterDeposit[0].getTransactions())
                 .isNotEmpty();
 
         assertThat(accountsAfterDeposit[0].getTransactions().toString())
-                .contains("DEPOSIT");
+                .contains(TransactionType.DEPOSIT.name());
+
     }
 
     @Test

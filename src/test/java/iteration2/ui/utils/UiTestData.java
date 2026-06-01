@@ -11,6 +11,13 @@ public class UiTestData {
     public static final String MAX_TRANSFER_AMOUNT = "10000.00";
     public static final String GREATER_THAN_MAX_TRANSFER_AMOUNT = "10000.01";
 
+    public static final double MAX_DEPOSIT_AMOUNT_VALUE = 5000.00;
+    public static final double MAX_TRANSFER_AMOUNT_VALUE = 10000.00;
+
+    public static final double BALANCE_RESERVE_AMOUNT = 100.00;
+    public static final double SENDER_INITIAL_BALANCE = 100.00;
+    public static final double TRANSFER_AMOUNT_GREATER_THAN_BALANCE = 200.00;
+
     private UiTestData() {
     }
 

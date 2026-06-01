@@ -3,6 +3,7 @@ package iteration2.ui.tests;
 import iteration2.ui.utils.UiTestData;
 import models.CreateAccountResponse;
 import models.CreateUserRequest;
+import models.TransactionType;
 import org.junit.jupiter.api.Test;
 import specs.ResponseSpecs;
 
@@ -25,7 +26,11 @@ public class TransferMoneyTest extends BaseUiTest {
         double transferAmount = UiTestData.randomTransferAmount();
         String transferAmountText = UiTestData.amountAsText(transferAmount);
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), transferAmount + 100.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                transferAmount + UiTestData.BALANCE_RESERVE_AMOUNT
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
@@ -61,10 +66,10 @@ public class TransferMoneyTest extends BaseUiTest {
                 .isNotEmpty();
 
         assertThat(senderAccountAfterTransfer.getTransactions().toString())
-                .contains("TRANSFER_OUT");
+                .contains(TransactionType.TRANSFER_OUT.name());
 
         assertThat(receiverAccountAfterTransfer.getTransactions().toString())
-                .contains("TRANSFER_IN");
+                .contains(TransactionType.TRANSFER_IN.name());
     }
 
     @Test
@@ -78,7 +83,11 @@ public class TransferMoneyTest extends BaseUiTest {
         CreateAccountResponse senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         CreateAccountResponse receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), 10000.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                UiTestData.MAX_TRANSFER_AMOUNT_VALUE
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
@@ -102,16 +111,16 @@ public class TransferMoneyTest extends BaseUiTest {
         CreateAccountResponse receiverAccountAfterTransfer = uiApiBridge.getUserAccounts(receiver)[0];
 
         assertThat(senderAccountAfterTransfer.getBalance())
-                .isEqualTo(senderBalanceBeforeTransfer - 10000.00);
+                .isEqualTo(senderBalanceBeforeTransfer - UiTestData.MAX_TRANSFER_AMOUNT_VALUE);
 
         assertThat(receiverAccountAfterTransfer.getBalance())
-                .isEqualTo(receiverBalanceBeforeTransfer + 10000.00);
+                .isEqualTo(receiverBalanceBeforeTransfer + UiTestData.MAX_TRANSFER_AMOUNT_VALUE);
 
         assertThat(senderAccountAfterTransfer.getTransactions().toString())
-                .contains("TRANSFER_OUT");
+                .contains(TransactionType.TRANSFER_OUT.name());
 
         assertThat(receiverAccountAfterTransfer.getTransactions().toString())
-                .contains("TRANSFER_IN");
+                .contains(TransactionType.TRANSFER_IN.name());
     }
 
     @Test
@@ -125,7 +134,11 @@ public class TransferMoneyTest extends BaseUiTest {
         CreateAccountResponse senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         CreateAccountResponse receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), 10000.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                UiTestData.MAX_TRANSFER_AMOUNT_VALUE
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
@@ -166,8 +179,8 @@ public class TransferMoneyTest extends BaseUiTest {
         CreateAccountResponse senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         CreateAccountResponse receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
 
-        double senderInitialBalance = 100.00;
-        double transferAmount = 200.00;
+        double senderInitialBalance = UiTestData.SENDER_INITIAL_BALANCE;
+        double transferAmount = UiTestData.TRANSFER_AMOUNT_GREATER_THAN_BALANCE;
 
         uiApiBridge.deposit(sender, senderAccount.getId(), senderInitialBalance);
 
@@ -213,7 +226,11 @@ public class TransferMoneyTest extends BaseUiTest {
         double transferAmount = UiTestData.randomTransferAmount();
         String transferAmountText = UiTestData.amountAsText(transferAmount);
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), transferAmount + 100.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                transferAmount + UiTestData.BALANCE_RESERVE_AMOUNT
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
@@ -257,7 +274,11 @@ public class TransferMoneyTest extends BaseUiTest {
         double transferAmount = UiTestData.randomTransferAmount();
         String transferAmountText = UiTestData.amountAsText(transferAmount);
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), transferAmount + 100.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                transferAmount + UiTestData.BALANCE_RESERVE_AMOUNT
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
@@ -300,7 +321,11 @@ public class TransferMoneyTest extends BaseUiTest {
         double transferAmount = UiTestData.randomTransferAmount();
         String transferAmountText = UiTestData.amountAsText(transferAmount);
 
-        uiApiBridge.deposit(sender, senderAccount.getId(), transferAmount + 100.00);
+        uiApiBridge.deposit(
+                sender,
+                senderAccount.getId(),
+                transferAmount + UiTestData.BALANCE_RESERVE_AMOUNT
+        );
 
         senderAccount = uiApiBridge.getUserAccounts(sender)[0];
         receiverAccount = uiApiBridge.getUserAccounts(receiver)[0];
