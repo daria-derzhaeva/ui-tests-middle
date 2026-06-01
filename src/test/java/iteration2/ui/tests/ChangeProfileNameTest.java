@@ -1,6 +1,7 @@
 package iteration2.ui.tests;
 
 import generators.RandomData;
+import iteration2.ui.pages.EditProfilePage;
 import models.CreateUserRequest;
 import org.junit.jupiter.api.Test;
 import specs.ResponseSpecs;
@@ -10,6 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChangeProfileNameTest extends BaseUiTest {
 
+    private final EditProfilePage editProfilePage = new EditProfilePage();
+
     @Test
     public void userCanChangeProfileNameToValidNameTest() {
         CreateUserRequest user = uiApiBridge.createUser();
@@ -17,8 +20,11 @@ public class ChangeProfileNameTest extends BaseUiTest {
 
         loginAsUserByToken(user);
 
-        customerUiSteps.openEditProfilePage();
-        customerUiSteps.changeProfileName(expectedName);
+        editProfilePage
+                .open()
+                .shouldBeOpened()
+                .setProfileName(expectedName)
+                .submitProfileName();
 
         assertAlertContainsAndAccept(ResponseSpecs.PROFILE_UPDATED_UI_MESSAGE);
 
@@ -29,12 +35,16 @@ public class ChangeProfileNameTest extends BaseUiTest {
     @Test
     public void userCanNotChangeProfileNameWithInvalidFormatTest() {
         CreateUserRequest user = uiApiBridge.createUser();
+        String invalidName = RandomData.getInvalidName();
         String nameBeforeUpdate = uiApiBridge.getCustomerProfile(user).getName();
 
         loginAsUserByToken(user);
 
-        customerUiSteps.openEditProfilePage();
-        customerUiSteps.changeProfileName("John Smith1");
+        editProfilePage
+                .open()
+                .shouldBeOpened()
+                .setProfileName(invalidName)
+                .submitProfileName();
 
         assertAlertContainsAndAccept(ResponseSpecs.INVALID_PROFILE_NAME_MESSAGE);
 

@@ -15,7 +15,7 @@ public class RandomData {
     );
 
     private static final List<String> LAST_NAMES = List.of(
-            "Der", "Ivanova", "Petrova", "Smirnova", "Sidorova", "Volkova"
+            "Ivanova", "Petrova", "Smirnova", "Sidorova", "Volkova"
     );
 
     private RandomData() {
@@ -38,17 +38,11 @@ public class RandomData {
                 + LAST_NAMES.get(RANDOM.nextInt(LAST_NAMES.size()));
     }
 
-    public static double getDepositAmount() {
-        return GeneratingRule.MIN_DEPOSIT_AMOUNT
-                + RANDOM.nextInt(GeneratingRule.MAX_DEPOSIT_AMOUNT - GeneratingRule.MIN_DEPOSIT_AMOUNT);
+    public static String getInvalidName() {
+        return getValidName() + getRandomDigit();
     }
 
-    public static double getTransferAmount() {
-        return GeneratingRule.MIN_TRANSFER_AMOUNT
-                + RANDOM.nextInt(GeneratingRule.MAX_TRANSFER_AMOUNT - GeneratingRule.MIN_TRANSFER_AMOUNT);
-    }
-
-    public static String getEmail() {
-        return getUsername() + "@test.com";
+    private static int getRandomDigit() {
+        return RANDOM.nextInt(10);
     }
 }
